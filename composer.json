@@ -1,0 +1,44 @@
+{
+  "name": "michaeld555/santander-sdk",
+  "description": "Unofficial Santander SDK for PHP/Laravel",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "michaeld555",
+      "role": "Creator"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "illuminate/support": "^10.0|^11.0",
+    "illuminate/http": "^10.0|^11.0",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0",
+    "orchestra/testbench": "^8.0|^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Santander\\SDK\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Santander\\SDK\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Santander\\SDK\\SantanderServiceProvider"
+      ],
+      "aliases": {
+        "Santander": "Santander\\SDK\\Facades\\Santander"
+      }
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
