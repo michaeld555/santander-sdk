@@ -10,6 +10,7 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Log;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Santander\SDK\Auth\SantanderAuth;
 use Santander\SDK\Exceptions\SantanderClientError;
 use Santander\SDK\Exceptions\SantanderRequestError;
@@ -29,8 +30,10 @@ class SantanderApiClient
         $this->config = $config;
         $this->auth = $auth;
         $this->http = $http;
-        $this->logger = $config->logger ?? Log::getLogger();
-        if ($this->config->logger === null) {
+        if ($config->logger) {
+            $this->logger = $config->logger;
+        } else {
+            $this->logger = $this->resolveDefaultLogger();
             $this->config->logger = $this->logger;
         }
 
@@ -206,5 +209,19 @@ class SantanderApiClient
     {
         return in_array(strtoupper($this->config->logRequestResponseLevel), ['ALL', 'ERROR'], true);
     }
-    
+
+    private function resolveDefaultLogger(): LoggerInterface
+    {
+        try {
+            $root = Log::getFacadeRoot();
+            if ($root) {
+                return Log::getLogger();
+            }
+        } catch (\Throwable $e) {
+            // Ignorar quando estiver fora do Laravel ou sem facade root.
+        }
+
+        return new NullLogger();
+    }
+
 }

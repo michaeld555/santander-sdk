@@ -1,6 +1,6 @@
 {
   "name": "michaeld555/santander-sdk",
-  "description": "Unofficial Santander SDK for PHP/Laravel",
+  "description": "Santander SDK for PHP/Laravel",
   "type": "library",
   "license": "MIT",
   "authors": [
