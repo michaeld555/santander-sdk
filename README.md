@@ -4,7 +4,7 @@ SDK para integracao com APIs do Santander em projetos Laravel e PHP puro.
 
 ## Versao
 
-`1.1.0`
+`1.0.0`
 
 ## Sumario
 
@@ -19,7 +19,7 @@ SDK para integracao com APIs do Santander em projetos Laravel e PHP puro.
 - [Erros e Tratamento](#erros-e-tratamento)
 - [Logs e Observabilidade](#logs-e-observabilidade)
 - [Testes](#testes)
-- [Notas da versao 1.1.0](#notas-da-versao-110)
+- [Notas da versao 1.0.0](#notas-da-versao-110)
 - [Documentacao oficial Santander](#documentacao-oficial-santander)
 - [Licenca](#licenca)
 
@@ -459,7 +459,7 @@ Rodar suite atual:
 vendor/bin/phpunit
 ```
 
-## Notas da versao 1.1.0
+## Notas da versao 1.0.0
 
 - Adicionados modulos: `WorkspaceManagement`, `BankAccounts`, `BankSlipPayments`, `BarcodePayments`, `VehicleTaxesPayments`, `TaxesByFieldsPayments`, `PixAutomatic`
 - `Pix` expandido com `createPayment`, `confirmPayment`, `listPayments`, `getPayment`
