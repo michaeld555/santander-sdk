@@ -1,0 +1,1242 @@
+{
+	"info": {
+		"_postman_id": "8cb38e40-ff27-4967-8eb5-90124c913ded",
+		"name": "Pix Auto - SandBox - Produção",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "Token - V2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f7214dd0-91b6-41b8-b6e6-199945d9585b",
+								"exec": [
+									"const resposta = pm.response.json();\r",
+									"pm.environment.set(\"TokenTrustPixH\", resposta.access_token);\r",
+									"pm.collectionVariables.set(\"TokenTrustPixH\", resposta.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/auth/oauth/v2/token",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"auth",
+								"oauth",
+								"v2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "Criar Location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/locrec",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"locrec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Locations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/locrec?inicio=2025-03-27T13:45:59.999Z&fim=2025-03-28T13:45:59.999Z",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"locrec"
+							],
+							"query": [
+								{
+									"key": "inicio",
+									"value": "2025-03-27T13:45:59.999Z"
+								},
+								{
+									"key": "fim",
+									"value": "2025-03-28T13:45:59.999Z"
+								},
+								{
+									"key": "idRecPresente",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar Location",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/locrec/1001",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"locrec",
+								"1001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desvincular Location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/locrec/2001/idRec",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"locrec",
+								"2001",
+								"idRec"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Recorrência",
+			"item": [
+				{
+					"name": "Consultar Recorrência",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/rec/RR904008882025021000000000001?",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rec",
+								"RR904008882025021000000000001"
+							],
+							"query": [
+								{
+									"key": "txid",
+									"value": "AUT1234567890",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Recorrência",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": \"CANCELADA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/rec/RR904008882025021000000000023",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rec",
+								"RR904008882025021000000000023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Recorrências.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/rec?inicio=2025-03-26T00:00:00Z&fim=2025-03-26T23:59:59Z",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rec"
+							],
+							"query": [
+								{
+									"key": "inicio",
+									"value": "2025-03-26T00:00:00Z"
+								},
+								{
+									"key": "fim",
+									"value": "2025-03-26T23:59:59Z"
+								},
+								{
+									"key": "status",
+									"value": "APROVADA",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Recorrência",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"vinculo\": {\r\n    \"contrato\": \"63100862\",\r\n    \"devedor\": {\r\n      \"cpf\": \"45164632481\",\r\n      \"nome\": \"Fulano de Tal\"\r\n    },\r\n    \"objeto\": \"Serviço de Streamming de Música.\"\r\n  },\r\n  \"calendario\": {\r\n    \"dataFinal\": \"2025-04-01\",\r\n    \"dataInicial\": \"2024-04-01\",\r\n    \"periodicidade\": \"MENSAL\"\r\n  },\r\n  \"valor\": {\r\n    \"valorRec\": \"35.00\"\r\n  },\r\n  \"politicaRetentativa\": \"NAO_PERMITE\",\r\n  \"loc\": 108,\r\n  \"convenio\": \"0033-5234-004300000013\",\r\n  \"ativacao\": {\r\n    \"dadosJornada\": {\r\n      \"txid\": \"33beb661beda44a8928fef47dbeb2dc5\"\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/rec",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Recorrência",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"loc\": 42,\r\n  \"vinculo\": {\r\n    \"devedor\": {\r\n      \"nome\": \"Beltrano\"\r\n    }\r\n  },\r\n  \"calendario\": {\r\n    \"dataInicial\": \"2025-01-20\"\r\n  },\r\n  \"ativacao\": {\r\n    \"dadosJornada\": {\r\n      \"txid\": \"2342jhgk2342kjhg42khjg42asdfasdfak\"\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/rec/RR904008882025021000000000023",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rec",
+								"RR904008882025021000000000023"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Solicitação Confirmação",
+			"item": [
+				{
+					"name": "Criar Solicitação Confirmação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idRec\": \"RN904008882025032518271766437917\",\r\n  \"calendario\": {\r\n    \"dataExpiracaoSolicitacao\": \"2025-04-24T12:17:11.926Z\"\r\n  },\r\n  \"destinatario\": {\r\n    \"agencia\": \"2569\",\r\n    \"conta\": \"550689\",\r\n    \"cpf\": \"15231470190\",\r\n    \"ispbParticipante\": \"90400888\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/solicrec?",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"solicrec"
+							],
+							"query": [
+								{
+									"key": "txid",
+									"value": "AUT1234567890",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Solicitação Confirmação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/solicrec/SC904008882025031000000000201?",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"solicrec",
+								"SC904008882025031000000000201"
+							],
+							"query": [
+								{
+									"key": "txid",
+									"value": "AUT1234567890",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revisar Solicitação Confirmação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": \"CANCELADA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/solicrec/SC904008882025031000000000201",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"solicrec",
+								"SC904008882025031000000000201"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Cobrança Recorrente",
+			"item": [
+				{
+					"name": "Criar Cobrança Recorrente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idRec\": \"RR904008882025021000000000301\",\r\n  \"infoAdicional\": \"Serviços de Streamming de Música e Filmes.\",\r\n  \"calendario\": {\r\n    \"dataDeVencimento\": \"2025-05-25\"\r\n  },\r\n  \"valor\": {\r\n    \"original\": \"106.07\"\r\n  },\r\n  \"ajusteDiaUtil\": true,\r\n  \"devedor\": {\r\n    \"cep\": \"89256140\",\r\n    \"cidade\": \"Uberlândia\",\r\n    \"email\": \"sebastiao.tavares@mail.com\",\r\n    \"logradouro\": \"Alameda Franco 1056\",\r\n    \"uf\": \"MG\"\r\n  },\r\n  \"recebedor\": {\r\n    \"agencia\": \"9708\",\r\n    \"conta\": \"012682\",\r\n    \"tipoConta\": \"CORRENTE\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/cobr/7f733863543b4a16b516d839bd4bc34e",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cobr",
+								"7f733863543b4a16b516d839bd4bc34e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revisar Cobrança Recorrente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": \"CANCELADA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/cobr/7f733863543b4a16b516d839bd4bc34e",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cobr",
+								"7f733863543b4a16b516d839bd4bc34e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Cobrança Recorrente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/cobr/txidcobrtestesandbox000000404",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cobr",
+								"txidcobrtestesandbox000000404"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Cobranças Recorrentes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/cobr?inicio=2025-04-25T00:00:00Z&fim=2025-04-26T23:59:59Z",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cobr"
+							],
+							"query": [
+								{
+									"key": "inicio",
+									"value": "2025-04-25T00:00:00Z"
+								},
+								{
+									"key": "fim",
+									"value": "2025-04-26T23:59:59Z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solicitar Retentativa Cobrança",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/cobr/7f733863543b4a16b516d839bd4bc34e/retentativa/2025-04-30",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cobr",
+								"7f733863543b4a16b516d839bd4bc34e",
+								"retentativa",
+								"2025-04-30"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Webhook Recorrência",
+			"item": [
+				{
+					"name": "Configurar Webhook Recorrência",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"webhookUrl\": \"https://webhook-test.com/57d6e6a16126c8b026b35e8fa9d2161e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/webhookrec",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"webhookrec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Webhook Recorrência",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/webhookrec",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"webhookrec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Webhook Recorrência",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/webhookrec",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"webhookrec"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Webhook Cobrança Recorrente",
+			"item": [
+				{
+					"name": "Configurar Webhook Cobrança Recorrente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"webhookUrl\": \"https://webhook-test.com/5b0cefdd1a5670d7e68ef4f620b60205\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/webhookcobr",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"webhookcobr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Webhook Cobrança Recorrente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/webhookcobr",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"webhookcobr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Webhook Cobrança Recorrente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenTrustPixH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-application-key",
+								"value": "{{x-application-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_SANDBOX_PROD}}/api/v1/webhookcobr",
+							"host": [
+								"{{HOST_SANDBOX_PROD}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"webhookcobr"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"variable": [
+		{
+			"id": "a49e10c7-b941-410d-8fee-ebb52be21ad9",
+			"key": "TokenTrustPixH",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

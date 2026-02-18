@@ -1,0 +1,347 @@
+{
+    "info": {
+        "_postman_id": "1531961c-ecdc-48f4-a959-b9f18493fd19",
+        "name": "API Comprovantes",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Oauth",
+            "request": {
+                "auth": {
+                    "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "client_id",
+                            "value": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "grant_type",
+                            "value": "client_credentials",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://trust-open.api.santander.com.br/auth/oauth/v2/token",
+                    "protocol": "https",
+                    "host": [
+                        "trust-open",
+                        "api",
+                        "santander",
+                        "com",
+                        "br"
+                    ],
+                    "path": [
+                        "auth",
+                        "oauth",
+                        "v2",
+                        "token"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get List Payment",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "x-application-key",
+                        "value": "",
+                        "type": "default"
+                    }
+                ],
+                "url": {
+                    "raw": "https://trust-open.api.santander.com.br/consult_payment_receipts/v1/payment_receipts?_limit=100&_offset=0&start_date=2024-10-01&end_date=2024-10-31",
+                    "protocol": "https",
+                    "host": [
+                        "trust-open",
+                        "api",
+                        "santander",
+                        "com",
+                        "br"
+                    ],
+                    "path": [
+                        "consult_payment_receipts",
+                        "v1",
+                        "payment_receipts"
+                    ],
+                    "query": [
+                        {
+                            "key": "_limit",
+                            "value": "100"
+                        },
+                        {
+                            "key": "_offset",
+                            "value": "0"
+                        },
+                        {
+                            "key": "start_date",
+                            "value": "2024-10-01"
+                        },
+                        {
+                            "key": "end_date",
+                            "value": "2024-10-31"
+                        },
+                        {
+                            "key": "start_time",
+                            "value": "17:11:26",
+                            "disabled": true
+                        },
+                        {
+                            "key": "end_time",
+                            "value": "17:32:31",
+                            "disabled": true
+                        },
+                        {
+                            "key": "beneficiary_document",
+                            "value": "",
+                            "disabled": true
+                        },
+                        {
+                            "key": "account_agency",
+                            "value": "1234",
+                            "disabled": true
+                        },
+                        {
+                            "key": "account_number",
+                            "value": "2345678901234",
+                            "disabled": true
+                        },
+                        {
+                            "key": "category",
+                            "value": "TRIBUTOS",
+                            "disabled": true
+                        },
+                        {
+                            "key": "end_date",
+                            "value": "{{data}}",
+                            "disabled": true
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Crete File Request",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "x-application-key",
+                        "value": "",
+                        "type": "default"
+                    }
+                ],
+                "url": {
+                    "raw": "https://trust-open.api.santander.com.br/consult_payment_receipts/v1/payment_receipts/VX854844862802112537338/file_requests",
+                    "protocol": "https",
+                    "host": [
+                        "trust-open",
+                        "api",
+                        "santander",
+                        "com",
+                        "br"
+                    ],
+                    "path": [
+                        "consult_payment_receipts",
+                        "v1",
+                        "payment_receipts",
+                        "VX854844862802112537338",
+                        "file_requests"
+                    ],
+                    "query": [
+                        {
+                            "key": "X-Application-Key",
+                            "value": "rGkzaBHmSdY3EesnvLNQcgr6Cw75Fc5K",
+                            "disabled": true
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get File Request",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "x-application-key",
+                        "value": "",
+                        "type": "default"
+                    }
+                ],
+                "url": {
+                    "raw": "https://trust-open.api.santander.com.br/consult_payment_receipts/v1/payment_receipts/VX854844862802112537338/file_requests/6eef649d-8c45-4ace-ab1e-3d67bf6ab1da",
+                    "protocol": "https",
+                    "host": [
+                        "trust-open",
+                        "api",
+                        "santander",
+                        "com",
+                        "br"
+                    ],
+                    "path": [
+                        "consult_payment_receipts",
+                        "v1",
+                        "payment_receipts",
+                        "VX854844862802112537338",
+                        "file_requests",
+                        "6eef649d-8c45-4ace-ab1e-3d67bf6ab1da"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get List File Request",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "x-application-key",
+                        "value": "",
+                        "type": "default"
+                    }
+                ],
+                "url": {
+                    "raw": "https://trust-open.api.santander.com.br/consult_payment_receipts/v1/payment_receipts/VX854844862802112537338/file_requests",
+                    "protocol": "https",
+                    "host": [
+                        "trust-open",
+                        "api",
+                        "santander",
+                        "com",
+                        "br"
+                    ],
+                    "path": [
+                        "consult_payment_receipts",
+                        "v1",
+                        "payment_receipts",
+                        "VX854844862802112537338",
+                        "file_requests"
+                    ],
+                    "query": [
+                        {
+                            "key": "_offset",
+                            "value": "2",
+                            "disabled": true
+                        },
+                        {
+                            "key": "_limit",
+                            "value": "1",
+                            "disabled": true
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
