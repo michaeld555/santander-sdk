@@ -78,7 +78,8 @@ class SantanderApiClient
 
         $workspaceId = Workspaces::getFirstWorkspaceIdOfType($this, 'PAYMENTS');
         if (! $workspaceId) {
-            throw new SantanderClientError('Conta sem configuracao de workspace na configuracao e na conta.');
+            $this->logger->warning('Nenhuma workspace PAYMENTS ativa encontrada. Crie uma workspace ou configure SANTANDER_WORKSPACE_ID.');
+            return;
         }
 
         $this->logger->info('Workspace obtido e configurado com sucesso: ' . $workspaceId);
