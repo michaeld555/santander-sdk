@@ -38,7 +38,7 @@ Esta SDK cobre os fluxos principais das colecoes em `endpoints/`:
 | Dominio | Base endpoint | Acesso via SDK | Metodos |
 | --- | --- | --- | --- |
 | Auth | `/auth/oauth/v2/token` | interno (`SantanderAuth`) | renovacao automatica de token |
-| Workspaces | `/management_payments_partners/v1/workspaces` | `Santander::workspaces()` | `createWorkspace`, `listWorkspaces`, `getWorkspace`, `updateWorkspace`, `deleteWorkspace` |
+| Workspaces | `/management_payments_partners/v1/workspaces` | `Santander::workspaces()` | `createWorkspace`, `createWorkspaceValidated`, `listWorkspaces`, `getWorkspace`, `updateWorkspace`, `deleteWorkspace` |
 | Pix Payments | `/management_payments_partners/v1/workspaces/:workspaceid/pix_payments` | `Santander::pix()` | `transferPix`, `createPayment`, `confirmPayment`, `getPayment`, `listPayments` |
 | Bank Slip Payments | `/management_payments_partners/v1/workspaces/:workspaceid/bank_slip_payments` | `Santander::bankSlips()` | `createPayment`, `confirmPayment`, `getPayment`, `listPayments`, `listAvailableBankSlips` |
 | Barcode Payments | `/management_payments_partners/v1/workspaces/:workspaceid/barcode_payments` | `Santander::barcodes()` | `createPayment`, `confirmPayment`, `getPayment`, `listPayments` |
@@ -259,9 +259,17 @@ foreach (Santander::receipts()->paymentListIterByPages([
 ### 3) Workspaces (`Santander::workspaces()`)
 
 ```php
-$created = Santander::workspaces()->createWorkspace([
+$created = Santander::workspaces()->createWorkspaceValidated([
     'type' => 'PAYMENTS',
-    'name' => 'Workspace API',
+    'description' => 'Workspace API',
+    'mainDebitAccount' => [
+        'branch' => '1',
+        'number' => '130392838',
+    ],
+    'tags' => ['client:123'],
+    'pixPaymentsActive' => true,
+    'bankSlipPaymentsActive' => true,
+    'bankSlipAvailableActive' => true,
 ]);
 
 $list = Santander::workspaces()->listWorkspaces();
@@ -476,4 +484,3 @@ vendor/bin/phpunit
 ## Licenca
 
 MIT
-
