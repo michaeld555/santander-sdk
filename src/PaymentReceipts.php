@@ -63,7 +63,7 @@ class PaymentReceipts
                 $content = $e->getContent() ?? [];
                 $errors = $content['errors'] ?? [];
                 foreach ($errors as $error) {
-                    if (($error['code'] ?? null) === self::ALREADY_REQUESTED_RECEIPT) {
+                    if ($this->isAlreadyRequestedReceiptError($error)) {
                         return $this->handleAlreadyCreated($paymentId);
                     }
                 }
@@ -75,7 +75,7 @@ class PaymentReceipts
     public function getReceipt(string $paymentId, string $receiptRequestId): array
     {
         if ($paymentId === '' || $receiptRequestId === '') {
-            throw new \InvalidArgumentException('payment_id and receipt_request are required');
+            throw new \InvalidArgumentException('payment_id and receipt_request_id are required');
         }
 
         $endpoint = self::RECEIPTS_ENDPOINT . '/' . $paymentId . '/file_requests/' . $receiptRequestId;
@@ -85,6 +85,10 @@ class PaymentReceipts
 
     public function receiptCreationHistory(string $paymentId): array
     {
+        if ($paymentId === '') {
+            throw new \InvalidArgumentException('payment_id is required');
+        }
+
         $endpoint = self::RECEIPTS_ENDPOINT . '/' . $paymentId . '/file_requests';
         return $this->client->get($endpoint);
     }
@@ -132,11 +136,30 @@ class PaymentReceipts
     {
         return [
             'payment_id' => $paymentId,
-            'receipt_request_id' => $response['request']['requestId'] ?? null,
-            'status' => $response['file']['statusInfo']['statusCode'] ?? null,
-            'location' => $response['file']['fileRepository']['location'] ?? null,
+            'receipt_request_id' => $response['request']['requestId'] ?? $response['requestId'] ?? null,
+            'status' => $response['file']['statusInfo']['statusCode'] ?? $response['status'] ?? null,
+            'location' => $response['file']['fileRepository']['location'] ?? $response['location'] ?? null,
             'data' => $response,
         ];
+    }
+
+    private function isAlreadyRequestedReceiptError(mixed $error): bool
+    {
+        if (! is_array($error)) {
+            return false;
+        }
+
+        $rawCode = $error['code'] ?? $error['errorCode'] ?? null;
+        if (! is_scalar($rawCode)) {
+            return false;
+        }
+
+        $code = trim((string) $rawCode);
+        if ($code === '') {
+            return false;
+        }
+
+        return str_pad($code, 3, '0', STR_PAD_LEFT) === self::ALREADY_REQUESTED_RECEIPT;
     }
 
     private function extractOffsetFromUrl(string $url): ?string

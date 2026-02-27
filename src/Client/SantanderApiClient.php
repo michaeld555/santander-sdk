@@ -120,7 +120,9 @@ class SantanderApiClient
 
             if (! $response->successful()) {
                 $this->logErrorIfNeeded($method, $url, $params, $data, $response, null);
-                throw new SantanderRequestError('Not successful code', $response->status(), Helpers::tryParseResponseToJson($response));
+                $content = Helpers::tryParseResponseToJson($response);
+                $message = $this->buildRequestErrorMessage($response, $content);
+                throw new SantanderRequestError($message, $response->status(), $content);
             }
 
             $this->logRequestSuccessIfNeeded($method, $url, $params, $data, $response);
@@ -136,6 +138,79 @@ class SantanderApiClient
             $this->logErrorIfNeeded($method, $url, $params, $data, $response, $e);
             throw new SantanderRequestError('Error in request: ' . $e->getMessage(), 0, null, $e);
         }
+    }
+
+    private function buildRequestErrorMessage(Response $response, ?array $content): string
+    {
+        $messages = [];
+        if ($content !== null) {
+            $rootMessage = $this->firstMessageFromArray($content);
+            if ($rootMessage !== null) {
+                $messages[] = $rootMessage;
+            }
+
+            $errors = $content['errors'] ?? null;
+            if (is_array($errors)) {
+                foreach ($errors as $error) {
+                    if (is_string($error)) {
+                        $error = trim($error);
+                        if ($error !== '') {
+                            $messages[] = $error;
+                        }
+                        continue;
+                    }
+
+                    if (! is_array($error)) {
+                        continue;
+                    }
+
+                    $errorMessage = $this->firstMessageFromArray($error);
+                    $errorCode = $error['code'] ?? $error['errorCode'] ?? null;
+                    if ($errorMessage !== null && is_scalar($errorCode) && trim((string) $errorCode) !== '') {
+                        $messages[] = $errorMessage . ' (code: ' . trim((string) $errorCode) . ')';
+                        continue;
+                    }
+
+                    if ($errorMessage !== null) {
+                        $messages[] = $errorMessage;
+                    }
+                }
+            }
+        }
+
+        $messages = array_values(array_unique(array_filter($messages, fn ($message) => $message !== '')));
+        if ($messages !== []) {
+            return implode(' | ', $messages);
+        }
+
+        $body = trim($response->body());
+        if ($body !== '') {
+            $singleLine = preg_replace('/\s+/', ' ', $body);
+            return trim($singleLine ?? $body);
+        }
+
+        return 'HTTP request failed with status ' . $response->status();
+    }
+
+    private function firstMessageFromArray(array $content): ?string
+    {
+        $messageKeys = ['message', 'error_description', 'error', 'detail', 'description', 'title'];
+        foreach ($messageKeys as $key) {
+            if (! isset($content[$key])) {
+                continue;
+            }
+
+            if (! is_string($content[$key])) {
+                continue;
+            }
+
+            $message = trim($content[$key]);
+            if ($message !== '') {
+                return $message;
+            }
+        }
+
+        return null;
     }
 
     private function baseRequest(): PendingRequest
